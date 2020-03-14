@@ -1,0 +1,137 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        .input-field input[type=date]:focus + label,
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=email]:focus + label,
+        .input-field input[type=password]:focus + label {
+            color: #e91e63;
+        }
+
+        .input-field input[type=date]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            border-bottom: 2px solid #e91e63;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="blue lighten-2" style="margin-bottom: 10px">
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo"><i class="material-icons left">cloud</i>Cervical</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/labeling">Label Images<i class="material-icons right">label</i></a></li>
+            <li><a href="/logout">LogOut<i class="material-icons right">eject</i></a></li>
+        </ul>
+    </div>
+</nav>
+<div class="section"></div>
+<main>
+    <center>
+        <img class="responsive-img" style="width: 250px;" src="https://i.imgur.com/ax0NCsK.gif" />
+        <div class="section"></div>
+
+        <h5 class="indigo-text">Edit Password!</h5>
+        <div class="section"></div>
+
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                <form class="col s12" action="/pwdc" method="post" id="form1">
+                    <div class='row'>
+                        <div class='col s12'>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='curpass' id='curpassword' />
+                            <label for='curpassword'>Current Password</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='newpass1' id='password1' />
+                            <label for='password1'>New Password</label>
+                        </div>
+                        <label hidden id="lab2" style='float: right;'>
+                            <span class="red darken-3">Password can't be empty!</span>
+                        </label>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='newpass2' id='password2' />
+                            <label for='password2'>Confirm New Password</label>
+                        </div>
+                        <label hidden id="lab1" style='float: right;'>
+                            <span class="red darken-3">Passwords don't match!</span>
+                        </label>
+                    </div>
+
+                    <br />
+                    <center>
+                        <div class='row'>
+                            <button type="button" class='col s12 btn btn-large waves-effect indigo' onclick="subm()" value="submit">Edit</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </center>
+    <p id="demo"></p>
+    <div class="section"></div>
+    <div class="section"></div>
+</main>
+<script>
+    let stat = '<%- stats %>';
+    if(stat == 'Wrong'){
+        var toastHTML = '<span>Wrong Password!</span>';
+        M.toast({html: toastHTML , classes:'red'});
+    }
+    else if(stat == 'Right'){
+        var toastHTML = '<span>Password Changed Successfully!</span>';
+        M.toast({html: toastHTML , classes:'green'});
+    }
+    function subm() {
+        let a1 = document.querySelector('#password1').value;
+        let a2 = document.querySelector('#password2').value;
+        if(a1.length == 0){
+            document.querySelector('#lab2').removeAttribute('hidden');
+        }
+        else if(a1 !== a2){
+            document.querySelector('#lab1').removeAttribute('hidden');
+        }
+        else{
+            document.querySelector('#form1').submit();
+        }
+    }
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+</body>
+
+</html>

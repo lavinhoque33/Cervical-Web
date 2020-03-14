@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        let uID = '<%- uName %>';
+        let stat = '<%- stats %>';
+        let curName = '<%- flist %>';
+        let lcount = '<%- lcount %>';
+        let nName = '<%- nName %>';
+        let ilcount = '<%- ilcount %>';
+
+        function drawArrow(fromx, fromy, tox, toy, c) {
+            //variables to be used when creating the arrow
+            //var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var headlen = 2;
+
+            var angle = Math.atan2(toy - fromy, tox - fromx);
+
+            //starting path of the arrow from the start square to the end square and drawing the stroke
+            ctx.beginPath();
+            ctx.moveTo(fromx, fromy);
+            ctx.lineTo(tox, toy);
+            ctx.strokeStyle = "#cc0000";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            //starting a new path from the head of the arrow to one of the sides of the point
+            ctx.beginPath();
+            ctx.moveTo(tox, toy);
+            ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+
+            //path from the side point of the arrow, to the other side point
+            ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+
+            //path from the side point back to the tip of the arrow, and then again to the opposite side point
+            ctx.lineTo(tox, toy);
+            ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+
+            //draws the paths created above
+            ctx.strokeStyle = "#cc0000";
+            ctx.lineWidth = 10;
+            ctx.stroke();
+            ctx.fillStyle = "#cc0000";
+            ctx.fill();
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Images</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body style="margin: 0;padding: 0;height: 600px;">
+<div class="hide-on-med-and-down">
+    <div class="row">
+        <div class="col s12 l12">
+            <nav class="blue lighten-2" style="margin-bottom: 10px">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo"><i class="material-icons left">cloud</i>Cervical</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="\pwdc">Change Password<i class="material-icons right">edit</i></a></li>
+                        <li><a href="\logout">LogOut<i class="material-icons right">eject</i></a></li>
+                    </ul>
+                </div>
+            </nav>
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="\pwdc">Change Password</a></li>
+                <li><a href="\logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container" style="margin-left: 125px">
+        <div class="row" style="margin-bottom: 0px">
+            <div class="col l4 s4" style="font-size: 30%">
+                <p>
+                    <label>
+                        <input class="with-gap" id="defaultRad" name="group1" value="Cancerous" type="radio" checked/>
+                        <span>Cancerous</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Confusing" type="radio"/>
+                        <span>Confusing</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Superficial squamous cell" type="radio"/>
+                        <span>Superficial squamous cell</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Intermediate squamous cell" type="radio"/>
+                        <span>Intermediate squamous cell</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Parabasal cell" type="radio"/>
+                        <span>Parabasal cell</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Squamous metaplasia - mature" type="radio"/>
+                        <span>Squamous metaplasia - mature</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Squamous metaplasia - immature" type="radio"/>
+                        <span>Squamous metaplasia - immature</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Squamous metaplasia - indeterminate" type="radio"/>
+                        <span>Squamous metaplasia - indeterminate</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Tubal metaplasia" type="radio"/>
+                        <span>Tubal metaplasia</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Parakeratosis - typical" type="radio"/>
+                        <span>Parakeratosis - typical</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Parakeratosis - atypical" type="radio"/>
+                        <span>Parakeratosis - atypical</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Canonball cell" type="radio"/>
+                        <span>Canonball cell</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Neutrophil" type="radio"/>
+                        <span>Neutrophil</span>
+                    </label>
+                </p>
+            </div>
+            <div class="col l4 s4" style="font-size: 30%">
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Hyperkeratosis" type="radio"/>
+                        <span>Hyperkeratosis</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Endocervical cell - profile view" type="radio"/>
+                        <span>Endocervical cell - profile view</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Endocervical cell - end-on view" type="radio"/>
+                        <span>Endocervical cell - end-on view</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Endometrial cell" type="radio"/>
+                        <span>Endometrial cell</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Arias-Stella reaction" type="radio"/>
+                        <span>Arias-Stella reaction</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Decidual change" type="radio"/>
+                        <span>Decidual change</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Syncytiotrophoblast" type="radio"/>
+                        <span>Syncytiotrophoblast</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Atrophy with inflammation" type="radio"/>
+                        <span>Atrophy with inflammation</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Atrophy - parabasal-type" type="radio"/>
+                        <span>Atrophy - parabasal-type</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1"
+                               value="Reactive cellular changes associated with inflammation"
+                               type="radio"/>
+                        <span>Reactive cellular changes associated with inflammation</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1"
+                               value="Reactive cellular changes associated with radiation"
+                               type="radio"/>
+                        <span>Reactive cellular changes associated with radiation</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Clue cell" type="radio"/>
+                        <span>Clue cell</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input class="with-gap" name="group1" value="Noise" type="radio"/>
+                        <span>Noise</span>
+                    </label>
+                </p>
+            </div>
+            <div class="col l4 s4">
+                <div style="margin-left: 150px; margin-right: 0px" id="stas1"></div>
+                <div style="margin-left: 100px;margin-top: 60px;">
+                    <img onclick="toggleCanvas()" src="" alt="default" id="s1" width="250px" height="250px">
+                    <canvas onclick="toggleCanvas()" id='myCanvas' width='300px' height='300px'></canvas>
+                    <p>
+                    <form action="/labeling" method="post" id="finalSub">
+                        <input id="obje" hidden type="text" name="retObject">
+                        <button type="button" class="btn waves-effect waves-light purple darken-4"
+                                onclick="submitLabel()"
+                                value="submit">Submit Label<i class="material-icons right">send</i></button>
+                        <button type="button" class="btn waves-effect waves-light purple darken-1" onclick="skipLabel()"
+                                value="submit">Skip<i class="material-icons right">send</i></button>
+                    </form>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 0px">
+            <div class="col l8 s8">
+                <textarea id="comment"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hide-on-med-and-up">
+    <div class="fixed-action-btn" id="topnav" style="right: auto;margin-left: 5%;bottom: auto;margin-top: 5%">
+        <a class="btn-floating red">
+            <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+            <li><a href="\pwdc" class="btn-floating btn-small blue"><i class="material-icons">edit</i></a>
+                <a href="#" class="btn-floating btn-small" style="position: fixed;right: auto;bottom:auto;padding:0px 0.5rem;text-align: right;background-color: #323232;border-radius: 2px;color: #FFF;width:auto;">Change Password</a></li>
+            <li><a href="\logout" class="btn-floating btn-small red darken-1"><i class="material-icons">eject</i></a>
+                <a href="#" class="btn-floating btn-small" style="position: fixed;right: auto;bottom:auto;padding:0px 0.5rem;text-align: right;background-color: #323232;border-radius: 2px;color: #FFF;width:auto;">Logout</a></li>
+        </ul>
+    </div>
+    <div class="center-align">
+        <img onclick="toggleCanvas2()" src="" alt="default" id="s2" width="250px" height="250px">
+        <canvas onclick="toggleCanvas2()" id='myCanvas2' width='300px' height='300px'></canvas>
+    </div>
+    <div class="row" style="height: 275px;">
+        <div hidden class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#test1">Tab 1</a></li>
+                <li class="tab col s3"><a href="#test2">Tab 2</a></li>
+                <li class="tab col s3"><a href="#test3">Tab 3</a></li>
+                <li class="tab col s3"><a href="#test4">Tab 4</a></li>
+                <li class="tab col s3"><a href="#test5">Tab 5</a></li>
+            </ul>
+        </div>
+        <div id="test1" class="col s12 center-align">
+            <p>
+                <label>
+                    <input class="with-gap" id="defaultRad" name="group2" value="Cancerous" type="radio" checked/>
+                    <span>Cancerous</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Confusing" type="radio"/>
+                    <span>Confusing</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Superficial squamous cell" type="radio"/>
+                    <span>Superficial squamous cell</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Intermediate squamous cell" type="radio"/>
+                    <span>Intermediate squamous cell</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Parabasal cell" type="radio"/>
+                    <span>Parabasal cell</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Squamous metaplasia - mature" type="radio"/>
+                    <span>Squamous metaplasia - mature</span>
+                </label>
+            </p>
+        </div>
+        <div id="test2" class="col s12 center-align">
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Squamous metaplasia - immature" type="radio"/>
+                    <span>Squamous metaplasia - immature</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Squamous metaplasia - indeterminate" type="radio"/>
+                    <span>Squamous metaplasia - indeterminate</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Tubal metaplasia" type="radio"/>
+                    <span>Tubal metaplasia</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Parakeratosis - typical" type="radio"/>
+                    <span>Parakeratosis - typical</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Parakeratosis - atypical" type="radio"/>
+                    <span>Parakeratosis - atypical</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Canonball cell" type="radio"/>
+                    <span>Canonball cell</span>
+                </label>
+            </p>
+        </div>
+        <div id="test3" class="col s12 center-align">
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Neutrophil" type="radio"/>
+                    <span>Neutrophil</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Hyperkeratosis" type="radio"/>
+                    <span>Hyperkeratosis</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Endocervical cell - profile view" type="radio"/>
+                    <span>Endocervical cell - profile view</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Endocervical cell - end-on view" type="radio"/>
+                    <span>Endocervical cell - end-on view</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Endometrial cell" type="radio"/>
+                    <span>Endometrial cell</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Arias-Stella reaction" type="radio"/>
+                    <span>Arias-Stella reaction</span>
+                </label>
+            </p>
+        </div>
+        <div id="test4" class="col s12 center-align">
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Decidual change" type="radio"/>
+                    <span>Decidual change</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Syncytiotrophoblast" type="radio"/>
+                    <span>Syncytiotrophoblast</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Atrophy with inflammation" type="radio"/>
+                    <span>Atrophy with inflammation</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Atrophy - parabasal-type" type="radio"/>
+                    <span>Atrophy - parabasal-type</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Clue cell" type="radio"/>
+                    <span>Clue cell</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2" value="Noise" type="radio"/>
+                    <span>Noise</span>
+                </label>
+            </p>
+        </div>
+        <div id="test5" class="col s12 center-align">
+            <p>
+                <label>
+                    <input class="with-gap" name="group2"
+                           value="Reactive cellular changes associated with inflammation"
+                           type="radio"/>
+                    <span>Reactive cellular changes associated with inflammation</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input class="with-gap" name="group2"
+                           value="Reactive cellular changes associated with radiation"
+                           type="radio"/>
+                    <span>Reactive cellular changes associated with radiation</span>
+                </label>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 center-align">
+            <textarea id="comment2"></textarea>
+        </div>
+    </div>
+    <div class="fixed-action-btn" id="botnav">
+        <a class="btn-floating green">
+            <i class="large material-icons">forward</i>
+        </a>
+        <ul>
+            <form action="/labeling" method="post" id="finalSub2">
+            <input id="obje2" hidden type="text" name="retObject">
+            <li><a type="button" onclick="submitLabel2()" class="btn-floating btn-small green darken-3"><i class="material-icons">done</i></a>
+                <a href="#" class="btn-floating btn-small" style="position: fixed;right: 85px;padding:0px 0.5rem;text-align: right;background-color: #323232;border-radius: 2px;color: #FFF;width:auto;">Submit</a></li>
+            <li><a type="button" onclick="skipLabel2()" class="btn-floating btn-small red darken-3"><i class="material-icons">clear</i></a>
+                <a href="#" class="btn-floating btn-small" style="position: fixed;right: 85px;padding:0px 0.5rem;text-align: right;background-color: #323232;border-radius: 2px;color: #FFF;width:auto;">Skip</a></li>
+            </form>
+        </ul>
+    </div>
+</div>
+<script>
+    $('#topnav').floatingActionButton({
+        direction: 'bottom',
+        hoverEnabled: false
+    });
+    $('#botnav').floatingActionButton({
+        direction: 'top',
+        hoverEnabled: false
+    });
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+    });
+    $(document).ready(function(){
+        $('.tabs').tabs({
+            swipeable : true,
+            responsiveThreshold : 1920
+        });
+    });
+    let base = '<%- imge %>';
+    base = JSON.parse(base);
+    if(window.innerWidth>500){
+        document.querySelector('#s1').src = `data:image/JPEG;base64,${base}`;
+        document.querySelector('#s1').alt = `${curName}.jpg`;
+    }
+    else{
+        document.querySelector('#s2').src = `data:image/JPEG;base64,${base}`;
+        document.querySelector('#s2').alt = `${curName}.jpg`;
+    }
+    document.querySelector('#stas1').innerHTML = `Labelled: ${lcount}`;
+    let px = '<%- px %>';
+    let py = '<%- py %>';
+    let cnvs = document.getElementById("myCanvas");
+    let tmp1 = document.querySelector('#s1');
+    cnvs.style.position = "absolute";
+    cnvs.style.left = tmp1.offsetLeft - 25 + "px";
+    cnvs.style.top = tmp1.offsetTop - 25 + "px";
+    let cnvs2 = document.getElementById("myCanvas2");
+    let tmp2 = document.querySelector('#s2');
+    cnvs2.style.position = "absolute";
+    cnvs2.style.left = tmp2.offsetLeft - 25 + "px";
+    cnvs2.style.top = tmp2.offsetTop - 25 + "px";
+    console.log(px - 40 + 25, py - 40 + 25, px - 5 + 25, py - 5 + 25);
+    if(window.innerWidth<=500)
+        drawArrow(px - 40 + 25, py - 40 + 25, px - 5 + 25, py - 5 + 25,cnvs2);
+    else
+        drawArrow(px - 40 + 25, py - 40 + 25, px - 5 + 25, py - 5 + 25,cnvs);
+    if (stat == 'Error') {
+        var toastHTML = '<span>Error Labeling Content!</span>';
+        M.toast({html: toastHTML, classes: 'red'});
+    } else if (stat == 'Success') {
+        var toastHTML = `<span>Successfully Labeled Content!</span>`;
+        M.toast({html: toastHTML, classes: 'green'});
+    }
+
+    function submitLabel() {
+        var tmp1 = {};
+        tmp1.fName = curName;
+        tmp1.px = px;
+        tmp1.py = py;
+        tmp1.nname = nName;
+        tmp1.ilcount = Number(ilcount) + 1;
+        tmp1.label = document.querySelector('input[name="group1"]:checked').value;
+        tmp1.uID = uID;
+        tmp1.comm = document.querySelector('#comment').value;
+        document.querySelector('#obje').value = JSON.stringify(tmp1);
+        document.querySelector('#finalSub').submit();
+    }
+    function submitLabel2() {
+        var tmp1 = {};
+        tmp1.fName = curName;
+        tmp1.px = px;
+        tmp1.py = py;
+        tmp1.nname = nName;
+        tmp1.ilcount = Number(ilcount) + 1;
+        tmp1.label = document.querySelector('input[name="group2"]:checked').value;
+        tmp1.uID = uID;
+        tmp1.comm = document.querySelector('#comment2').value;
+        document.querySelector('#obje2').value = JSON.stringify(tmp1);
+        document.querySelector('#finalSub2').submit();
+    }
+
+    function skipLabel() {
+        var tmp1 = {};
+        tmp1.fName = curName;
+        tmp1.px = px;
+        tmp1.py = py;
+        tmp1.nname = nName;
+        tmp1.ilcount = ilcount;
+        tmp1.label = 'skip';
+        tmp1.uID = uID;
+        tmp1.comm = '';
+        document.querySelector('#obje').value = JSON.stringify(tmp1);
+        document.querySelector('#finalSub').submit();
+    }
+    function skipLabel2() {
+        var tmp1 = {};
+        tmp1.fName = curName;
+        tmp1.px = px;
+        tmp1.py = py;
+        tmp1.nname = nName;
+        tmp1.ilcount = ilcount;
+        tmp1.label = 'skip';
+        tmp1.uID = uID;
+        tmp1.comm = '';
+        document.querySelector('#obje2').value = JSON.stringify(tmp1);
+        document.querySelector('#finalSub2').submit();
+    }
+
+    function toggleCanvas() {
+        let cnvs = document.getElementById("myCanvas");
+        if (cnvs.style.display != "none")
+            cnvs.style.display = "none";
+        else
+            cnvs.style.display = "block";
+    }
+
+    function toggleCanvas2() {
+        let cnvs = document.getElementById("myCanvas2");
+        if (cnvs.style.display != "none")
+            cnvs.style.display = "none";
+        else
+            cnvs.style.display = "block";
+    }
+</script>
+</body>
+</html>
